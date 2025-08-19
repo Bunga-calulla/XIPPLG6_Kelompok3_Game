@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Math Solver Game — Question</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="question">
+  <div class="bg-shapes"></div>
+
+  <header class="topbar">
+    <div class="user-pill">
+      <span id="userNameLabel">Player</span>
+    </div>
+    <div class="score-pill">
+      Score: <span id="scoreLabel">0</span>
+    </div>
+  </header>
+
+  <main class="wrapper">
+    <div class="progress">
+      <div id="progressBar" class="progress-bar"></div>
+      <div id="progressText" class="progress-text"></div>
+    </div>
+
+    <section class="card question-card rise-in">
+      <div id="questionBox" class="question-box pulse">
+        <!-- Question text injected here -->
+      </div>
+
+      <div class="choices-grid">
+        <button class="choice-btn" data-key="A"><span class="chip">A</span><span class="choice-text"></span></button>
+        <button class="choice-btn" data-key="B"><span class="chip">B</span><span class="choice-text"></span></button>
+        <button class="choice-btn" data-key="C"><span class="chip">C</span><span class="choice-text"></span></button>
+        <button class="choice-btn" data-key="D"><span class="chip">D</span><span class="choice-text"></span></button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

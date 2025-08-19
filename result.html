@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Math Solver Game — Result</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="result">
+  <div class="bg-shapes"></div>
+
+  <main class="wrapper">
+    <section class="card result-card pop-in">
+      <h2 class="title">🎉 You Finished!</h2>
+      <p class="subtitle">
+        Great job, <strong id="finalUser">Player</strong>!
+      </p>
+
+      <div class="final-score bounce">
+        Final Score
+        <div id="finalScore" class="final-score-number">0</div>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard">
+        <h3>🏆 Leaderboard</h3>
+        <table id="leaderboardTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="result-actions" style="gap: 50px; margin-top: 50px;">
+        <button onclick="resetLeaderboard()" class="btn btn-primary wobble-hover">❌ Reset Leadeboard</button>
+        <button id="playAgainBtn" class="btn btn-primary wobble-hover">🔁 Play Again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
