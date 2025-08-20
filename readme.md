@@ -7,6 +7,6 @@ Tugas game quiz matematika
 
 - Axel Azhar Putra Ananca (6)
 - Jonathan Crhistian Boangmanalu (17)
--
+- Hanna Pramesti Qaireen (12)
 -
 -
