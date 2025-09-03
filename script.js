@@ -276,7 +276,6 @@ function initResult() {
     setTimeout(() => goToStart(), 150);
   });
 }
-
 /* ---------- Leaderboard Functions ---------- */
 function saveToLeaderboard(name, score) {
   if (name.trim().toLowerCase() === "player") {
@@ -295,12 +294,12 @@ function saveToLeaderboard(name, score) {
     board.push({ name, score });
   }
 
+  // Sort by score descending and keep only top 10
   board.sort((a, b) => b.score - a.score);
   board = board.slice(0, 10);
 
   localStorage.setItem(STORAGE.leaderboard, JSON.stringify(board));
 }
-
 
 function renderLeaderboard() {
   const tbody = document.querySelector("#leaderboardTable tbody");
@@ -317,7 +316,3 @@ function renderLeaderboard() {
   });
 }
 
-function resetLeaderboard() {
-  localStorage.clear(STORAGE.leaderboard)
-  location.reload();
-}
