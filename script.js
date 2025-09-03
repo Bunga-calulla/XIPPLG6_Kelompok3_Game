@@ -276,6 +276,7 @@ function initResult() {
     setTimeout(() => goToStart(), 150);
   });
 }
+
 /* ---------- Leaderboard Functions ---------- */
 function saveToLeaderboard(name, score) {
   if (name.trim().toLowerCase() === "player") {
@@ -315,4 +316,3 @@ function renderLeaderboard() {
     tbody.appendChild(tr);
   });
 }
-
