@@ -385,11 +385,7 @@ function saveToLeaderboard(name, score) {
     board.push({ name, score });
   }
 
-<<<<<<< HEAD
   // ✅ SORT DESC + SLICE 10 — sesuai revisi temanmu
-=======
-  // Sort by score descending and keep only top 10
->>>>>>> edd35d94e9d59fcc52c38edfb9d96d0a2193c5e2
   board.sort((a, b) => b.score - a.score);
   board = board.slice(0, 10);
 
@@ -415,8 +411,4 @@ function renderLeaderboard() {
     `;
     tbody.appendChild(tr);
   });
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> edd35d94e9d59fcc52c38edfb9d96d0a2193c5e2
