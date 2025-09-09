@@ -52,22 +52,21 @@ function goToStart() {
   window.location.href = `index.html`;
 }
 
-/* ---------- Tiny Sound FX via WebAudio (optional, no assets) ---------- */
-let audioCtx;
-function playBeep(type = "ok") {
-  try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.type = "sine";
-    o.frequency.value = type === "ok" ? 880 : 180; // hi = correct, low = wrong
-    g.gain.setValueAtTime(type === "ok" ? 0.06 : 0.08, audioCtx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
-    o.connect(g).connect(audioCtx.destination);
-    o.start();
-    o.stop(audioCtx.currentTime + 0.25);
-  } catch { /* ignore */ }
+// Audio
+const soundCorrect = new Audio("correct.mp3");
+const soundWrong = new Audio("wrong.mp3");
+
+// PlayBeep jadi versi pake file
+function playBeep(type) {
+    if (type === "ok") {
+        soundCorrect.currentTime = 0;
+        soundCorrect.play();
+    } else if (type === "bad") {
+        soundWrong.currentTime = 0;
+        soundWrong.play();
+    }
 }
+
 
 /* ---------- Start Page ---------- */
 function initStart() {
@@ -412,3 +411,4 @@ function renderLeaderboard() {
     tbody.appendChild(tr);
   });
 }
+
