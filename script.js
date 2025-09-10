@@ -53,8 +53,8 @@ function goToStart() {
 }
 
 // Audio
-const soundCorrect = new Audio("correct.mp3");
-const soundWrong = new Audio("wrong.mp3");
+const soundCorrect = new Audio("assets/correct.mp3");
+const soundWrong = new Audio("assets/wrong.mp3");
 
 // PlayBeep jadi versi pake file
 function playBeep(type) {
@@ -70,6 +70,7 @@ function playBeep(type) {
 
 /* ---------- Start Page ---------- */
 function initStart() {
+  const soundStart = new Audio("assets/start.mp3");
   const input = document.getElementById("username");
   const btn = document.getElementById("playBtn");
   const levelButtons = {
@@ -98,7 +99,7 @@ function initStart() {
   // Set default
   updateLevelSelection();
 
-  // Event listeners for level selection
+  // Event listeners for level selection (tanpa suara)
   levelButtons.easy.addEventListener("click", () => {
     selectedLevel = "easy";
     localStorage.setItem("msg_level", selectedLevel);
@@ -115,25 +116,32 @@ function initStart() {
     updateLevelSelection();
   });
 
-  btn.addEventListener("click", () => {
-    const name = input.value.trim();
-    if (!name) {
-      input.focus();
-      input.classList.add("flash-wrong");
-      setTimeout(() => input.classList.remove("flash-wrong"), 500);
-      playBeep("bad");
-      return;
-    }
-    saveName(name);
-    resetScore();
-    playBeep("ok");
-    setTimeout(() => goToQuestion(1), 150);
-  });
+// Start button dengan suara
+btn.addEventListener("click", () => {
+  const name = input.value.trim();
+  if (!name) {
+    input.focus();
+    input.classList.add("flash-wrong");
+    setTimeout(() => input.classList.remove("flash-wrong"), 500);
+    playBeep("bad");
+    return;
+  }
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !btn.disabled) btn.click();
-  });
+  saveName(name);
+  resetScore();
+
+  // 🔊 Play sound start sebelum pindah
+  const soundStart = new Audio("assets/start.mp3");
+  soundStart.currentTime = 0;
+  soundStart.play();
+
+  // ⏳ Tunggu sesuai durasi audio (misal 1500ms)
+  setTimeout(() => {
+    goToQuestion(1);
+  }, 1500);
+});
 }
+
 
 /* ---------- Question Generation ---------- */
 function randomInt(min, max) {
@@ -275,7 +283,7 @@ function initQuestion() {
   const userNameLabel = document.getElementById("userNameLabel");
   const scoreLabel = document.getElementById("scoreLabel");
   const questionBox = document.getElementById("questionBox");
-  const choiceButtons = Array.from(document.querySelectorAll(".choice-btn"));
+  const choiceButtons = document.querySelectorAll(".choice-btn");
   const progressBar = document.getElementById("progressBar");
   const progressText = document.getElementById("progressText");
 
@@ -288,6 +296,7 @@ function initQuestion() {
   progressText.textContent = `Question ${number} / ${TOTAL_QUESTIONS} • Level: ${level.toUpperCase()}`;
 
   // Generate & render
+  
   const { questionText, correctAnswer, options } = generateQuestion(level);
   questionBox.innerHTML = questionText; // innerHTML for <sup> support
 
@@ -319,11 +328,11 @@ function initQuestion() {
     }, 650);
   }
 
-  choiceButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      handleChoice(btn, btn.querySelector(".choice-text").textContent);
-    });
-  });
+choiceButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    handleChoice(btn, btn.querySelector(".choice-text").textContent);
+  }, { once: true });
+});
 }
 
 /* ---------- Result Page ---------- */
@@ -331,6 +340,11 @@ function initResult() {
   const user = getName() || "Player";
   const score = getScore();
   const level = localStorage.getItem("msg_level") || "easy";
+
+  // 🔊 Mainkan end sound ketika result page dibuka
+  const soundEnd = new Audio("assets/end.mp3");
+  soundEnd.currentTime = 0;
+  soundEnd.play();
 
   document.getElementById("finalUser").textContent = user;
   animateCount(document.getElementById("finalScore"), 0, score, 600);
@@ -346,9 +360,9 @@ function initResult() {
   saveToLeaderboard(user, score);
   renderLeaderboard();
 
+  // 🔁 Play Again tanpa suara (LEADERBOARD TETAP ADA)
   document.getElementById("playAgainBtn").addEventListener("click", () => {
     resetScore();
-    playBeep("ok");
     setTimeout(() => goToStart(), 150);
   });
 }
@@ -364,6 +378,7 @@ function animateCount(el, from, to, duration = 500) {
   requestAnimationFrame(tick);
 }
 function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
 
 /* ---------- Leaderboard Functions ---------- */
 function saveToLeaderboard(name, score) {
