@@ -387,7 +387,6 @@ function saveToLeaderboard(name, score) {
     return;
   }
 
-  // ✅ GLOBAL — tidak pakai level
   let board = JSON.parse(localStorage.getItem(STORAGE.leaderboard) || "[]");
   const existingIndex = board.findIndex(entry => entry.name === name);
 
