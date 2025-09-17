@@ -382,28 +382,22 @@ function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
 /* ---------- Leaderboard Functions ---------- */
 function saveToLeaderboard(name, score) {
-  if (name.trim().toLowerCase() === "player") {
-    console.warn('Default name "Player" is not allowed on the leaderboard.');
-    return;
-  }
-
-  let board = JSON.parse(localStorage.getItem(STORAGE.leaderboard) || "[]");
-  const existingIndex = board.findIndex(entry => entry.name === name);
+  let board = JSON.parse(localStorage.getItem(STORAGE.leaderboard) || "[]"); // Ambil data dari localstorage
+  const existingIndex = board.findIndex(entry => entry.name === name); // Ngecek apakah ada di localstora
 
   if (existingIndex !== -1) {
     if (score > board[existingIndex].score) {
-      board[existingIndex].score = score;
+      board[existingIndex].score = score; //Kalau ada, update ke skor tertinggi
     }
   } else {
-    board.push({ name, score });
+    board.push({ name, score }); //Kalau ga ada, buat baru
   }
 
-  // ✅ SORT DESC + SLICE 10 — sesuai revisi temanmu
-  board.sort((a, b) => b.score - a.score);
-  board = board.slice(0, 10);
+  board.sort((a, b) => b.score - a.score); // Urutin dari tertinggi ke rendah
+  board = board.slice(0, 10); // Limit ke 10 pemain
 
-  localStorage.setItem(STORAGE.leaderboard, JSON.stringify(board));
-}
+  localStorage.setItem(STORAGE.leaderboard, JSON.stringify(board)); //Simpan data terbaru
+} 
 
 function renderLeaderboard() {
   const tbody = document.querySelector("#leaderboardTable tbody");
